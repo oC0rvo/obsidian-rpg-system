@@ -33,7 +33,7 @@ const identityTemplate= () => ({
     description:"",
 });
 
-const atributesTemplates = () =>({
+const attributesTemplates = () =>({
     primary:{},  
     secondary:{}, 
     temporary:{},
@@ -67,3 +67,72 @@ const inventoryTemplate = () =>({
     items:[],
     equipment:{}
 });
+const abilitiesTemplate = () =>({
+    passives:[],
+    actives:[],
+    rituals:[],
+    cooldowns:[]
+});
+
+const conditionsTemplate=() =>({
+    states:[],
+    effects:[],
+    temporaryModifiers:[]
+});
+
+const progressionTemplate = () =>({
+    experience:0,
+    milestones:[],
+    upgrade:[],
+});
+const notesTemplates = () =>({
+    public:"",
+    private:"",
+    master:""
+});
+
+/*
+================================= 
+    Template De Personagem
+=================================
+*/
+
+const characterTemplate = () =>({
+    system:systemTemplate(),
+    metadata:metadataTemplate(),
+    identity:identityTemplate(),
+    attributes:attributesTemplates(),
+    resources:resourcesTemplates(),
+    skills:skillsTemplates(),
+    combat:combatTemplate(),
+    inventory:inventoryTemplate(),
+    abilities:abilitiesTemplate(),
+    conditions:conditionsTemplate(),
+    progression:progressionTemplate(),
+    notes:notesTemplates(),
+});
+
+/*
+==============================
+    STATES MACHINE
+==============================
+*/ 
+
+export function createEmptyCharacter(){
+    return characterTemplate();
+};
+
+export function cloneCharacter(characterState){
+    return structuredClone(characterState);
+};
+
+export function createCharacterFromData(data){
+    return{
+        ...characterTemplate(),
+        ...data,
+        system:{
+            ...systemTemplate(),
+            ...(data.system||{})
+        }
+    };
+}
